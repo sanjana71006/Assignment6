@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>MyShop</title>
+  <link rel="stylesheet" href="header.css">
+</head>
+<body>
+
+  <!-- Header -->
+  <div id="header"></div>
+
+  <!-- Category Buttons -->
+  <div class="category-buttons">
+    <button onclick="fetchProducts('all')">All</button>
+    <button onclick="fetchProducts('tv')">TV</button>
+    <button onclick="fetchProducts('audio')">Audio</button>
+    <button onclick="fetchProducts('laptop')">Laptop</button>
+    <button onclick="fetchProducts('mobile')">Mobile</button>
+    <button onclick="fetchProducts('gaming')">Gaming</button>
+    <button onclick="fetchProducts('appliances')">Appliances</button>
+  </div>
+
+  <!-- Product Display -->
+  <div id="productGrid" class="product-grid"></div>
+
+  <script src="header.js"></script>
+  <script src="products.js"></script>
+</body>
+</html>
