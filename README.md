@@ -57,12 +57,6 @@ assignment-6-main/
 
 ---
 
-### 📸 Screenshots
-
-> *(Optional: Add screenshots of your page here to showcase the UI)*
-
----
-
 ### 🛠 Tech Stack
 
 * HTML5
