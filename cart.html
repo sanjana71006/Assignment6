@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>My Cart</title>
+  <link rel="stylesheet" href="header.css" />
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+      background-color: #f9f9f9;
+    }
+
+    #cartContainer {
+      max-width: 1000px;
+      margin: auto;
+    }
+
+    .cart-item {
+      display: flex;
+      gap: 20px;
+      padding: 15px;
+      background: white;
+      margin-bottom: 15px;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+
+    .cart-item img {
+      width: 120px;
+      height: 120px;
+      object-fit: contain;
+    }
+
+    .item-details {
+      flex: 1;
+    }
+
+    .item-details h3 {
+      margin-bottom: 10px;
+      font-size: 18px;
+    }
+
+    .item-details p {
+      margin: 5px 0;
+    }
+
+    .empty-message {
+      text-align: center;
+      padding: 40px;
+      background-color: white;
+      border-radius: 8px;
+      font-size: 20px;
+      font-weight: bold;
+    }
+
+    .remove-btn {
+      background-color: red;
+      color: white;
+      border: none;
+      padding: 6px 12px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div id="header"></div>
+
+  <h2 style="text-align: center; margin: 20px 0;">🛒 Your Cart</h2>
+
+  <div id="cartContainer"></div>
+
+  <script src="header.js"></script>
+  <script>
+    function loadCart() {
+      const user = JSON.parse(localStorage.getItem("currentUser"));
+      const cartContainer = document.getElementById("cartContainer");
+
+      if (!user || localStorage.getItem("isLoggedIn") !== "true") {
+        cartContainer.innerHTML = '<div class="empty-message">Please log in to view your cart.</div>';
+        return;
+      }
+
+      const cartKey = `cart_${user.id}`;
+      const cartItems = JSON.parse(localStorage.getItem(cartKey)) || [];
+
+      if (cartItems.length === 0) {
+        cartContainer.innerHTML = '<div class="empty-message">Your cart is empty.</div>';
+        return;
+      }
+
+      cartContainer.innerHTML = "";
+
+      cartItems.forEach((item, index) => {
+        const card = document.createElement("div");
+        card.className = "cart-item";
+        card.innerHTML = `
+          <img src="${item.image}" alt="${item.title}">
+          <div class="item-details">
+            <h3>${item.title}</h3>
+            <p><strong>Category:</strong> ${item.category}</p>
+            <p><strong>Price:</strong> ₹${item.price}</p>
+            <button class="remove-btn" onclick="removeFromCart(${item.id})">Remove</button>
+          </div>
+        `;
+        cartContainer.appendChild(card);
+      });
+    }
+
+    function removeFromCart(productId) {
+      const user = JSON.parse(localStorage.getItem("currentUser"));
+      const cartKey = `cart_${user.id}`;
+      let cartItems = JSON.parse(localStorage.getItem(cartKey)) || [];
+
+      cartItems = cartItems.filter(item => item.id !== productId);
+      localStorage.setItem(cartKey, JSON.stringify(cartItems));
+      loadCart(); // refresh cart display
+    }
+
+    loadCart();
+  </script>
+</body>
+</html>

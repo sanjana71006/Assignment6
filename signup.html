@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Signup</title>
+
+    <!-- Header Styles -->
+    <link rel="stylesheet" href="header.css" />
+
+    <!-- Signup Page Styles -->
+    <link rel="stylesheet" href="signup.css" />
+  </head>
+  <body>
+    <!-- Header Placeholder -->
+    <div id="header"></div>
+
+    <!-- Signup Form -->
+    <div class="signup-container">
+      <form class="signup-form" onsubmit="handleSignup(event)">
+        <h2>Create an Account</h2>
+
+        <label for="name">Full Name</label>
+        <input type="text" id="name" required />
+
+        <label for="email">Email Address</label>
+        <input type="email" id="email" required />
+
+        <label for="password">Password</label>
+        <input type="password" id="password" required />
+
+        <button type="submit">Sign Up</button>
+        <p class="login-link">Already have an account? <a href="login.html">Login here</a></p>
+      </form>
+    </div>
+
+    <!-- Signup Logic -->
+    <script>
+      function handleSignup(e) {
+        e.preventDefault();
+        const name = document.getElementById("name").value.trim();
+        const email = document.getElementById("email").value.trim();
+        const password = document.getElementById("password").value.trim();
+        const newUser = { name, email, password };
+
+        let users = JSON.parse(localStorage.getItem("users")) || [];
+        const exists = users.some((u) => u.email === email);
+        if (exists) {
+          alert("User already exists!");
+          return;
+        }
+
+        users.push(newUser);
+        localStorage.setItem("users", JSON.stringify(users));
+        alert("Signup successful!");
+        window.location.href = "login.html";
+      }
+    </script>
+
+    <!-- Header Script -->
+    <script src="header.js"></script>
+    <script>header();</script>
+  </body>
+</html>
